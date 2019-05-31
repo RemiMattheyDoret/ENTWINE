@@ -1,0 +1,18 @@
+obs = R_wrapper.o G.o develop.o utilities.o
+CFLAGS = -arch x86_64 -std=gnu99 -I/Library/Frameworks/R.framework/Resources/include -I/Library/Frameworks/R.framework/Resources/include/x86_64 -DNDEBUG  -I/usr/local/include -I/usr/local/include/gsl -fPIC  -g -O3  -c
+LFLAGS = -arch x86_64 -std=gnu99 -dynamiclib -Wl,-headerpad_max_install_names -undefined dynamic_lookup -single_module -multiply_defined suppress -L/usr/local/lib -O3 -lgsl -lm -lgslcblas
+
+R_wrapper : $(obs)
+	$gcc $(LFLAGS) $(obs) -o R_wrapper.so -Wall -O3
+
+R_wrapper.o : R_wrapper.c constants.h develop.h G.h
+	$gcc $(CFLAGS) R_wrapper.c -Wall -O3
+
+G.o : G.c G.h constants.h utilities.h develop.h 
+	$gcc $(CFLAGS) G.c develop.c -Wall -O3
+
+develop.o : develop.c develop.h G.h constants.h
+	$gcc $(CFLAGS) develop.c -Wall -O3
+
+utilities.o : utilities.c develop.h
+	$gcc $(CFLAGS) utilities.c -Wall -O3

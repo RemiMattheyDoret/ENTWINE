@@ -1,0 +1,18 @@
+obs = R_wrapperGEOM.o G.o develop.o utilities.o
+CFLAGS = -arch x86_64 -std=gnu99 -I/Library/Frameworks/R.framework/Resources/include -I/Library/Frameworks/R.framework/Resources/include/x86_64 -DNDEBUG  -I/usr/local/include -I/usr/local/include/gsl -fPIC  -g -O3  -c
+LFLAGS = -arch x86_64 -std=gnu99 -dynamiclib -Wl,-headerpad_max_install_names -undefined dynamic_lookup -single_module -multiply_defined suppress -L/usr/local/lib -O3 -lgsl -lm -lgslcblas
+
+R_wrapperGEOM : $(obs)
+	$gcc $(LFLAGS) $(obs) -o R_wrapperGEOM.so
+
+R_wrapperGEOM.o : R_wrapperGEOM.c constants.h develop.h G.h
+	$gcc $(CFLAGS) R_wrapperGEOM.c
+
+G.o : G.c G.h constants.h utilities.h develop.h 
+	$gcc $(CFLAGS) G.c develop.c
+
+develop.o : develop.c develop.h G.h constants.h
+	$gcc $(CFLAGS) develop.c
+
+utilities.o : utilities.c develop.h
+	$gcc $(CFLAGS) utilities.c
