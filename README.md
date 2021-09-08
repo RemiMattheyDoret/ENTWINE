@@ -6,5 +6,5 @@ Sorry, there is no manual!
 
 **Author**
 
-The main author is Jeremy A. Draghi. I (Remi Matthey-Doret) only made a few modifications in order to improve performance as well as in order to allow implementatino of temporal environmental heteroogeneity as well as pllastic responses in responose to a performance signal.
+The main author is Jeremy A. Draghi. I (Remi Matthey-Doret) only made a few modifications in order to improve performance as well as in order to allow implementation of temporal environmental heteroogeneity as well as pllastic responses in responose to a performance signal.
 
